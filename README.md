@@ -14,3 +14,4 @@ Go into Terminal and paste, this starts the AI and it's processing:
 You can view the app at:
 http://127.0.0.1:8000
 
+Wait for a few seconds, it is slightly heavy. Also, i have pasted all this because I am nervous about adding an .env file
