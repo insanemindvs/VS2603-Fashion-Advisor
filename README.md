@@ -8,8 +8,9 @@ To use this, you need to get some libraries: So paste the following in your term
 LM Studio is used in this code, you can download it to host your own LLMs locally and use those in running this application. I recommend Mistral 7B models.
 You can find tutorials online on how to install it, start a server etc.
 
-Go into Terminal and paste:
+Go into Terminal and paste, this starts the AI and it's processing:
 'uvicorn main:app --reload'
 
 You can view the app at:
 http://127.0.0.1:8000
+
