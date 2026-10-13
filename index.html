@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VS2603</title>
+  <!-- Luxury Editorial Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-primary: #0b0b0c;
+      --bg-elevated: #141416;
+      --bg-card: #18181b;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-gold: rgba(212, 175, 55, 0.35);
+      --text-main: #f4f1ea;
+      --text-muted: #9a9893;
+      --accent-gold: #d4af37;
+      --accent-champagne: #e6d2b5;
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      padding-bottom: 140px;
+      overflow-x: hidden;
+      background-image: radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.06) 0%, transparent 60%);
+    }
+
+    /* Top Luxury Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(16px);
+      background: rgba(11, 11, 12, 0.8);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 18px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+    }
+
+    .brand h1 {
+      font-family: var(--font-serif);
+      font-weight: 600;
+      font-size: 1.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-main);
+    }
+
+    .brand span {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent-champagne);
+      opacity: 0.8;
+    }
+
+    .closet-btn {
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      padding: 10px 20px;
+      border-radius: 999px;
+      font-family: var(--font-sans);
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .closet-btn:hover {
+      border-color: var(--accent-champagne);
+      background: rgba(230, 210, 181, 0.06);
+    }
+
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 36px 24px;
+    }
+
+    /* Hero & "Find Me An Outfit" Top 4 Occasion Cards */
+    .section-eyebrow {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.25em;
+      color: var(--accent-champagne);
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: 2.3rem;
+      font-weight: 500;
+      margin-bottom: 24px;
+    }
+
+    .preset-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .preset-card {
+      position: relative;
+      height: 150px;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+      cursor: pointer;
+      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+    }
+
+    .preset-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--border-gold);
+    }
+
+    .preset-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.45) contrast(1.05);
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
+    }
+
+    .preset-card:hover img {
+      transform: scale(1.06);
+      filter: brightness(0.6);
+    }
+
+    .preset-overlay {
+      position: absolute;
+      inset: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+    }
+
+    .preset-overlay .italic-title {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 1.55rem;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .preset-overlay .preset-sub {
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-champagne);
+    }
+
+    /* Active Prompt Banner */
+    .active-query-banner {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 24px;
+      background: var(--bg-elevated);
+      border-left: 3px solid var(--accent-gold);
+      border-radius: 8px;
+      margin-bottom: 32px;
+      animation: fadeSlideUp 0.4s ease forwards;
+    }
+
+    .active-query-banner p {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 1.25rem;
+      color: var(--text-main);
+    }
+
+    /* Outfit Boxes Container */
+    .outfits-container {
+      display: flex;
+      flex-direction: column;
+      gap: 36px;
+    }
+
+    /* Individual Outfit Box */
+    .outfit-box {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 32px;
+      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .outfit-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      padding-bottom: 20px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .outfit-title-group h3 {
+      font-family: var(--font-serif);
+      font-size: 1.9rem;
+      font-weight: 500;
+      color: var(--text-main);
+    }
+
+    .outfit-badge {
+      display: inline-block;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: rgba(212, 175, 55, 0.1);
+      color: var(--accent-champagne);
+      border: 1px solid var(--border-gold);
+    }
+
+    .outfit-reasoning {
+      width: 100%;
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-top: 6px;
+    }
+
+    /* Specific Pieces Grid Inside the Outfit Box */
+    .pieces-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 20px;
+    }
+
+    .piece-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease;
+    }
+
+    .piece-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(230, 210, 181, 0.35);
+    }
+
+    .piece-img-wrapper {
+      height: 220px;
+      width: 100%;
+      overflow: hidden;
+      background: #202024;
+      position: relative;
+    }
+
+    .piece-img-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .piece-card:hover .piece-img-wrapper img {
+      transform: scale(1.07);
+    }
+
+    .piece-category-tag {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(11, 11, 12, 0.78);
+      backdrop-filter: blur(6px);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent-champagne);
+    }
+
+    .piece-info {
+      padding: 16px;
+    }
+
+    .piece-brand {
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .piece-name {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+
+    .piece-color {
+      font-size: 0.78rem;
+      color: var(--accent-champagne);
+      opacity: 0.85;
+    }
+
+    /* Missing Outfit / Horizontal Store Upsell Scroll */
+    .upsell-box {
+      background: linear-gradient(145deg, #161514, #101012);
+      border: 1px solid var(--border-gold);
+      border-radius: 20px;
+      padding: 36px;
+      animation: fadeSlideUp 0.5s ease forwards;
+    }
+
+    .upsell-notice {
+      font-family: var(--font-serif);
+      font-size: 1.85rem;
+      color: var(--accent-champagne);
+      margin-bottom: 8px;
+    }
+
+    .upsell-sub {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      margin-bottom: 28px;
+    }
+
+    .horizontal-scroll {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      padding-bottom: 12px;
+      scroll-snap-type: x mandatory;
+    }
+
+    .horizontal-scroll::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .horizontal-scroll::-webkit-scrollbar-thumb {
+      background: rgba(212, 175, 55, 0.3);
+      border-radius: 999px;
+    }
+
+    .store-card {
+      min-width: 260px;
+      scroll-snap-align: start;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .store-price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    .buy-btn {
+      background: var(--accent-champagne);
+      color: #0b0b0c;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    /* Shimmer Skeleton Loader */
+    .loader-wrapper {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 64px 20px;
+      text-align: center;
+    }
+
+    .luxury-spinner {
+      width: 44px;
+      height: 44px;
+      border: 2px solid rgba(212, 175, 55, 0.15);
+      border-top-color: var(--accent-gold);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 18px;
+    }
+
+    /* Floating Bottom Chatbox */
+    .chatbar-wrapper {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(860px, 92vw);
+      z-index: 50;
+    }
+
+    .chatbar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(20, 20, 22, 0.88);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(230, 210, 181, 0.25);
+      border-radius: 999px;
+      padding: 10px 12px 10px 24px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.75);
+      transition: border-color 0.3s ease;
+    }
+
+    .chatbar:focus-within {
+      border-color: var(--accent-gold);
+    }
+
+    .chatbar input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      font-size: 0.95rem;
+    }
+
+    .chatbar input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .send-btn {
+      background: linear-gradient(135deg, #e6d2b5, #c5a059);
+      color: #0b0b0c;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 26px;
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .send-btn:hover {
+      transform: scale(1.03);
+    }
+
+    /* Modal for viewing all Purchased Wardrobe Items */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+      justify-content: center;
+      align-items: center;
+      padding: 24px;
+    }
+
+    .modal-content {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      max-width: 960px;
+      width: 100%;
+      max-height: 82vh;
+      overflow-y: auto;
+      padding: 32px;
+    }
+
+    @keyframes fadeSlideUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <header>
+    <div class="brand">
+      <h1>VS2603</h1>
+    </div>
+    <button class="closet-btn" onclick="toggleClosetModal()">View My Purchased Closet (8)</button>
+  </header>
+
+  <div class="container">
+    <!-- Top 4 Italic Recommendations -->
+    <div class="section-eyebrow">Instant Curation</div>
+    <h2 class="section-title">Find Me an Outfit</h2>
+
+    <div class="preset-grid">
+      <div class="preset-card" onclick="askStylist('I have a sports event where we will play multiple field games, I want to look stylish but account for Pune weather')">
+        <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80" alt="Sports Event">
+        <div class="preset-overlay">
+          <div class="italic-title">"For a field sports day"</div>
+          <div class="preset-sub">Puma Jacket • Nike Pegasus • Shorts</div>
+        </div>
+      </div>
+
+      <div class="preset-card" onclick="askStylist('I am attending a daytime baby shower brunch, I want a refined smart-casual look')">
+        <img src="https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=600&q=80" alt="Baby Shower">
+        <div class="preset-overlay">
+          <div class="italic-title">"For a baby shower"</div>
+          <div class="preset-sub">Linen Shirt • Chinos • Loafers</div>
+        </div>
+      </div>
+
+      <div class="preset-card" onclick="askStylist('Sunny beach club afternoon and sunset drinks, keep it effortless and cool')">
+        <img src="https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=600&q=80" alt="For the beach">
+        <div class="preset-overlay">
+          <div class="italic-title">"For the beach"</div>
+          <div class="preset-sub">Resort Linen • Shorts • Aviators</div>
+        </div>
+      </div>
+
+      <div class="preset-card" onclick="askStylist('I have a grand formal wedding reception, what should I wear?')">
+        <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=600&q=80" alt="Formal Wedding">
+        <div class="preset-overlay">
+          <div class="italic-title">"For a formal wedding"</div>
+          <div class="preset-sub">Tests Missing Wardrobe Upsell</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active Situation Banner -->
+    <div id="queryBanner" class="active-query-banner">
+      <p id="queryText"></p>
+      <span class="outfit-badge">AI Stylist Active</span>
+    </div>
+
+    <!-- Loading Spinner while LM Studio thinks -->
+    <div id="loader" class="loader-wrapper">
+      <div class="luxury-spinner"></div>
+      <p style="font-family: var(--font-serif); font-size: 1.35rem; font-style: italic;">
+        Curating pieces from your personal wardrobe...
+      </p>
+    </div>
+
+    <!-- Dynamic Outfits Output Area -->
+    <div id="outfitsContainer" class="outfits-container"></div>
+  </div>
+
+  <!-- Floating Bottom Chatbar -->
+  <div class="chatbar-wrapper">
+    <form class="chatbar" onsubmit="handleFormSubmit(event)">
+      <input 
+        type="text" 
+        id="situationInput" 
+        placeholder="Describe your situation (e.g., 'Sports event in Pune weather' or 'I have a wedding')..."
+        autocomplete="off"
+      />
+      <button type="submit" class="send-btn">Curate Look</button>
+    </form>
+  </div>
+
+  <!-- Purchased Wardrobe Modal -->
+  <div id="closetModal" class="modal-backdrop" onclick="toggleClosetModal()">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 24px;">
+        <h3 style="font-family: var(--font-serif); font-size: 1.8rem;">Your Purchased Wardrobe Database</h3>
+        <button class="closet-btn" onclick="toggleClosetModal()">Close</button>
+      </div>
+      <div id="closetGrid" class="pieces-grid"></div>
+    </div>
+  </div>
+
+  <script>
+    const API_BASE = "http://127.0.0.1:8000";
+
+    // Handle bottom chatbar submission
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      const input = document.getElementById("situationInput");
+      const text = input.value.trim();
+      if (!text) return;
+      askStylist(text);
+      input.value = "";
+    }
+
+    // Call FastAPI -> LM Studio backend
+    async function askStylist(situationText) {
+      const container = document.getElementById("outfitsContainer");
+      const loader = document.getElementById("loader");
+      const banner = document.getElementById("queryBanner");
+      const queryText = document.getElementById("queryText");
+
+      banner.style.display = "flex";
+      queryText.textContent = `"${situationText}"`;
+      container.innerHTML = "";
+      loader.style.display = "flex";
+
+      try {
+        const response = await fetch(`${API_BASE}/get_outfit`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ situation: situationText })
+        });
+
+        const data = await response.json();
+        loader.style.display = "none";
+
+        // Case 1: User has NOT bought anything suitable for this event (e.g. Formal Wedding)
+        if (!data.has_suitable_outfit || !data.outfits || data.outfits.length === 0) {
+          renderStoreUpsell(data.message, data.store_recommendations || []);
+          return;
+        }
+
+        // Case 2: Render each Outfit Box and its specific clothing pieces inside
+        data.outfits.forEach((outfit, index) => {
+          const box = document.createElement("div");
+          box.className = "outfit-box";
+          box.style.animationDelay = `${index * 0.15}s`;
+
+          const piecesHTML = outfit.items.map(item => `
+            <div class="piece-card">
+              <div class="piece-img-wrapper">
+                <span class="piece-category-tag">${item.category}</span>
+                <img src="${item.image_url}" alt="${item.name}" />
+              </div>
+              <div class="piece-info">
+                <div class="piece-brand">${item.brand}</div>
+                <div class="piece-name">${item.name}</div>
+                <div class="piece-color">${item.color}</div>
+              </div>
+            </div>
+          `).join("");
+
+          box.innerHTML = `
+            <div class="outfit-header">
+              <div class="outfit-title-group">
+                <h3>${outfit.title}</h3>
+              </div>
+              <span class="outfit-badge">${outfit.occasion_tag || 'Curated Look'}</span>
+              <p class="outfit-reasoning">${outfit.reasoning}</p>
+            </div>
+            <div class="pieces-grid">
+              ${piecesHTML}
+            </div>
+          `;
+
+          container.appendChild(box);
+        });
+
+      } catch (err) {
+        loader.style.display = "none";
+        container.innerHTML = `
+          <div class="upsell-box">
+            <div class="upsell-notice">Connection Error</div>
+            <p class="upsell-sub">Make sure uvicorn main:app --reload and LM Studio are both running.</p>
+          </div>
+        `;
+      }
+    }
+
+    // Render Horizontal Store Scroll when user has no clothes for the event
+    function renderStoreUpsell(message, storeItems) {
+      const container = document.getElementById("outfitsContainer");
+      const cardsHTML = storeItems.map(item => `
+        <div class="store-card">
+          <div class="piece-img-wrapper">
+            <span class="piece-category-tag">${item.category}</span>
+            <img src="${item.image_url}" alt="${item.name}" />
+          </div>
+          <div class="piece-info">
+            <div class="piece-brand">${item.brand}</div>
+            <div class="piece-name">${item.name}</div>
+            <div class="store-price-row">
+              <span style="color: var(--accent-champagne); font-weight: 600;">${item.price}</span>
+              <button class="buy-btn">Shop Now</button>
+            </div>
+          </div>
+        </div>
+      `).join("");
+
+      container.innerHTML = `
+        <div class="upsell-box">
+          <div class="upsell-notice">${message}</div>
+          <p class="upsell-sub">Complete your wardrobe for this occasion with curated pieces from our store:</p>
+          <div class="horizontal-scroll">
+            ${cardsHTML}
+          </div>
+        </div>
+      `;
+    }
+
+    // Load User's Purchased Wardrobe for the top-right Drawer Modal
+    async function loadCloset() {
+      try {
+        const res = await fetch(`${API_BASE}/wardrobe`);
+        const data = await res.json();
+        const grid = document.getElementById("closetGrid");
+        grid.innerHTML = data.items.map(item => `
+          <div class="piece-card">
+            <div class="piece-img-wrapper">
+              <span class="piece-category-tag">ID #${item.item_id} • ${item.category}</span>
+              <img src="${item.image_url}" alt="${item.name}" />
+            </div>
+            <div class="piece-info">
+              <div class="piece-brand">${item.brand}</div>
+              <div class="piece-name">${item.name}</div>
+              <div class="piece-color">${item.color}</div>
+            </div>
+          </div>
+        `).join("");
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    function toggleClosetModal() {
+      const modal = document.getElementById("closetModal");
+      if (modal.style.display === "flex") {
+        modal.style.display = "none";
+      } else {
+        loadCloset();
+        modal.style.display = "flex";
+      }
+    }
+  </script>
+</body>
+</html>
